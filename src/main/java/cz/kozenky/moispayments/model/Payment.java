@@ -16,6 +16,8 @@ package cz.kozenky.moispayments.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import cz.kozenky.moispayments.model.deserializers.CustomJsonDateDeserializer;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -33,6 +35,7 @@ public class Payment {
   private TransactionPartyAccount partyAccount = null;
 
   @JsonProperty("dueDate")
+  @JsonDeserialize(using = CustomJsonDateDeserializer.class)
   private DateTime dueDate = null;
 
   @JsonProperty("recuringPayment")
