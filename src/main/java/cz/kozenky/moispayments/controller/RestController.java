@@ -1,5 +1,6 @@
 package cz.kozenky.moispayments.controller;
 
+import cz.kozenky.moispayments.model.codelist.Category;
 import cz.kozenky.moispayments.model.web_model.PieChartItem;
 import cz.kozenky.moispayments.model.Payment;
 import cz.kozenky.moispayments.service.PaymentsService;
@@ -45,9 +46,8 @@ public class RestController {
         List<PieChartItem> modelUnGroupped = new ArrayList<PieChartItem>() {};
         for (Payment p: payments) {
             BigDecimal amount = p.getValue().getAmount();
-            String name = getNameOfCategory(p.getCategoryId() == null? new BigDecimal(0) : p.getCategoryId());
-            BigDecimal category = p.getCategoryId() == null? new BigDecimal(0) : p.getCategoryId();
-            modelUnGroupped.add(new PieChartItem(amount, name ,category));
+            Category category = Category.getById(p.getCategoryId());
+            modelUnGroupped.add(new PieChartItem(amount, category.getName() ,category.getId()));
         }
         //MAP<Key,Value>
         Map<String, BigDecimal> sum = modelUnGroupped.stream().collect(
@@ -56,39 +56,12 @@ public class RestController {
 
         List<PieChartItem> model = new ArrayList<PieChartItem>() {};
         for (Map.Entry<String, BigDecimal> s:sum.entrySet() ) {
-            model.add(new PieChartItem(s.getValue(),s.getKey(),getIdOfCategory(s.getKey())));
+            model.add(new PieChartItem(s.getValue(),s.getKey(),Category.getByName(s.getKey()).getId()));
         }
         return model;
     }
 
-    //*************************************
-    //tohle se mi nelibi, kdo prijde s lepsim resenim napiste
-    // (enum ma problemy s BigDecimalem jako klicem, to same switch)
-
-    //abysme si kategorie pridavali samy byla by potreba DB, protoze APIna bere pouze IDcko
-    //tak jsme se s lukasem dohodli ze to tam budeme mit "NATVRDO"
-    //*************************************
-    private String getNameOfCategory(BigDecimal categoryId){
-
-        if (categoryId.compareTo(new BigDecimal(1.5)) == 0 ){
-            return "Elektronika";
-        }
-        if (categoryId.compareTo(new BigDecimal(0)) == 0 ){
-            return "Nezarazeno";
-        }
-        return "Nezarazeno(null)";
-    };
-
-    private BigDecimal getIdOfCategory(String name){
-
-        switch (name){
-            case "Elektronika":
-                return new BigDecimal(1.5);
-            case "Nezarazeno":
-                return new BigDecimal(0);
-        }
-        return null;
-    };
+   
 
     private List<Payment> getPaymentsFromApi(String from, String to, BigDecimal accountId) {
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
