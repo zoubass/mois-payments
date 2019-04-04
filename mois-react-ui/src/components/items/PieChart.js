@@ -6,10 +6,7 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
 
 export class PieChart extends Component {
-    constructor(props){
-        super(props);
-    }
-
+    
     async componentDidMount() {
         am4core.useTheme(am4themes_animated);
 
