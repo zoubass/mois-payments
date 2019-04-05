@@ -2,28 +2,28 @@ import React, { Component } from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css"
 
-export class PaymentsDetail extends Component {
+export class PaymentsCategoryTable extends Component {
 
     render() {
         const  columns = [
             {
-                id: 'value',
+                id: 'category',
+                Header: 'Category',
+                accessor: d => d.name
+            },
+            {
+                id:'value',
                 Header: 'Value',
-                accessor: d => d.value.amount
+                accessor:d => d.value,
             },
             {
                 id:'currency',
                 Header: 'Currency',
                 accessor:d => d.value.currency
-            },
-            {
-                id:'categoryId',
-                Header: 'CategoryId',
-                accessor:d => d.categoryId,
             }
         ];
 
-        const data = this.props.paymentsData;
+        const data = this.props.summaryData;
         return (
 
             <div>
