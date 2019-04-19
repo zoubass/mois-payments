@@ -4,10 +4,10 @@ import './components/Navigation.css';
 import './App.css';
 
 import {Home} from './components/Home';
-import {User} from "./components/User";
 import {Error} from "./components/Error";
 import {Navigation} from "./components/Navigation";
 import {Month} from "./components/Month";
+import {PaymentDetail} from "./components/PaymentDetail";
 
 class App extends Component {
     render() {
@@ -17,9 +17,9 @@ class App extends Component {
                 <Navigation/>
                 <Switch>
                     <Route exact path={"/"} component={Home}/>
-                    <Route path={"/user"} component={User}/>
                     <Route path={"/month"}component={Month}/>
-                    <Route component={Error}/>
+                    <Route path={"/payment_detail"} component={PaymentDetail}/>
+                  <Route component={Error}/>
                 </Switch>
                 </div>
             </Router>
