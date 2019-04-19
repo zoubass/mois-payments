@@ -2,77 +2,47 @@ package cz.kozenky.moispayments.model.codelist;
 
 import java.math.BigDecimal;
 
-public enum Category {
-    ELECTRONICS(new BigDecimal(1.5), "Elektronika"),
-    UNKNOWN(new BigDecimal(0), "Nezarazeno");
+/**
+    Serves mainly for newly user defined categories and their rules and as DTO for FE.
+ */
+public class Category {
 
     private String name;
     private BigDecimal id;
+    private CategoryRule rule;
 
-    Category(BigDecimal id, String name) {
-        this.id = id;
+    public Category(String name, BigDecimal id) {
         this.name = name;
+        this.id = id;
     }
 
-
-    public static Category getById(BigDecimal categoryId) {
-        if (categoryId != null) {
-
-            for (Category category : values()) {
-                if (category.id.compareTo(categoryId) == 0) {
-                    return category;
-                }
-            }
-        }
-        return UNKNOWN;
-    }
-
-    public static Category getByName(String name) {
-        if (name != null) {
-            for (Category category : values()) {
-                if (category.name.equals(name)) {
-                    return category;
-                }
-            }
-        }
-        return UNKNOWN;
+    public Category(String name, BigDecimal id, CategoryRule rule) {
+        this.name = name;
+        this.id = id;
+        this.rule = rule;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public BigDecimal getId() {
         return id;
     }
 
+    public void setId(BigDecimal id) {
+        this.id = id;
+    }
 
-    //*************************************
-    //tohle se mi nelibi, kdo prijde s lepsim resenim napiste
-    // (enum ma problemy s BigDecimalem jako klicem, to same switch)
+    public CategoryRule getRule() {
+        return rule;
+    }
 
-    //abysme si kategorie pridavali samy byla by potreba DB, protoze APIna bere pouze IDcko
-    //tak jsme se s lukasem dohodli ze to tam budeme mit "NATVRDO"
-    //*************************************
-    private String getNameOfCategory(BigDecimal categoryId){
-
-        if (categoryId.compareTo(new BigDecimal(1.5)) == 0 ){
-            return "Elektronika";
-        }
-        if (categoryId.compareTo(new BigDecimal(0)) == 0 ){
-            return "Nezarazeno";
-        }
-        return "Nezarazeno(null)";
-    };
-
-    private BigDecimal getIdOfCategory(String name){
-
-        switch (name){
-            case "Elektronika":
-                return new BigDecimal(1.5);
-            case "Nezarazeno":
-                return new BigDecimal(0);
-        }
-        return null;
-    };
+    public void setRule(CategoryRule rule) {
+        this.rule = rule;
+    }
 }

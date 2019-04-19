@@ -151,7 +151,7 @@ public class PaymentApi {
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<String, Object>();
 
-        final String[] accepts = { 
+        final String[] accepts = {
             "application/json"
         };
         final List<MediaType> accept = apiClient.selectHeaderAccept(accepts);

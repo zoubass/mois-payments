@@ -20,6 +20,11 @@ export class PaymentsDetailTable extends Component {
                 id:'categoryId',
                 Header: 'CategoryId',
                 accessor:d => d.categoryId,
+            },
+            {
+                id:'accountNumber',
+                Header: 'Account number',
+                accessor:d => d.accountNumber,
             }
         ];
 
