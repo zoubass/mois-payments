@@ -23,7 +23,10 @@ export class Navigation extends Component {
                             <Link to="/zxc" className="tabs__link">Location</Link>
                         </li>
                         <li className="tabs__item">
-                            <Link to="/user" className="tabs__link">User</Link>
+                            <Link to="/payment_detail" className="tabs__link">Payment detail</Link>
+                        </li>
+                        <li className="tabs__item">
+                            <Link to="/month" className="tabs__link">Month</Link>
                         </li>
                     </ul>
 

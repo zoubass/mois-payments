@@ -8,31 +8,30 @@ import {Home} from './components/Home';
 import {User} from "./components/User";
 import {Error} from "./components/Error";
 import {Navigation} from "./components/Navigation";
+import {Month} from "./components/Month";
+import {PaymentDetail} from "./components/PaymentDetail";
 import {KFlow} from "./components/KFlow";
 
 class App extends Component {
-
     render() {
-
         return (
             <Router>
                 <div>
                     <KFlow/>
                     <div className="test2">
                         <Navigation/>
-                    </div>z
-
+                    </div>
                 <Switch>
                     <Route exact path={"/"} component={Home}/>
                     <Route path={"/user"} component={User}/>
-                    <Route component={Error}/>
+                    <Route path={"/month"}component={Month}/>
+                    <Route path={"/payment_detail"} component={PaymentDetail}/>
+                  <Route component={Error}/>
                 </Switch>
                 </div>
             </Router>
         );
     }
 }
-
-
 
 export default App;
