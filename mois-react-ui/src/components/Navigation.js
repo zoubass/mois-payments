@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import './Navigation.css';
 import {Link} from "react-router-dom";
+import {KFlow} from "./KFlow";
 
 export class Navigation extends Component {
     render() {
 
         return (
+            <div className="">
                 <nav className="nav-collapse">
                     <ul className="tabs primary-nav">
                         <li className="tabs__item">
@@ -24,7 +26,10 @@ export class Navigation extends Component {
                             <Link to="/user" className="tabs__link">User</Link>
                         </li>
                     </ul>
+
                 </nav>
+
+            </div>
         );
     }
 
