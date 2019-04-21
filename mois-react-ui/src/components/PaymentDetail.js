@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../App.css';
 import logo from "../logo.svg";
 import {PaymentForm} from "./containers/PaymentForm";
+import {CategoryForm} from "./containers/CategoryForm";
 
 export class PaymentDetail extends Component{
   
@@ -39,6 +40,11 @@ export class PaymentDetail extends Component{
           <h2>Detail</h2>
           <div className="col-md">
             <PaymentForm payment={payment}/>
+          </div>
+          
+          <h2>Create category</h2>
+          <div className="col-md">
+            <CategoryForm/>
           </div>
         </div>
     );
