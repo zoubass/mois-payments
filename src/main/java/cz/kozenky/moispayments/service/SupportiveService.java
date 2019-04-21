@@ -16,7 +16,8 @@ import java.util.List;
 public class SupportiveService {
 
     /**
-     * Method get interval of actual dates, after period (DAY, MONTH, YEAR..)
+     * Method get interval of actual dates, before period (DAY, MONTH, YEAR..)
+     * going to past
      *
      * @param calPeriodConst java Calendar constant (Calendar.YEAR)
      * @param amount         count of periods
@@ -26,14 +27,14 @@ public class SupportiveService {
         DateDto dateDto = new DateDto();
         Calendar calendar = Calendar.getInstance();
         Date now = calendar.getTime();
-        calendar.add(calPeriodConst, amount);
-        Date afterPeriod = calendar.getTime();
+        calendar.add(calPeriodConst, -amount);
+        Date beforePeriod = calendar.getTime();
 
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        dateDto.setFromD(now);
-        dateDto.setFromS(dateFormat.format(now));
-        dateDto.setToD(afterPeriod);
-        dateDto.setToS(dateFormat.format(afterPeriod));
+        dateDto.setFromD(beforePeriod);
+        dateDto.setFromS(dateFormat.format(beforePeriod));
+        dateDto.setToD(now);
+        dateDto.setToS(dateFormat.format(now));
         return dateDto;
     }
 

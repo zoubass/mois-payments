@@ -84,7 +84,8 @@ public class PaymentsServiceImpl implements PaymentsService {
         calEnd.setTime(dateInterval.getToD());
         calStart.set(Calendar.DAY_OF_MONTH, 1);
         calEnd.set(Calendar.DAY_OF_MONTH, 1);
-        calEnd.add(Calendar.MONTH, 1);
+        calEnd.add(Calendar.MONTH, 2);
+        calStart.add(Calendar.MONTH, 1);
         int condMonth = calStart.get(Calendar.MONTH);
         int condYear = calEnd.get(Calendar.YEAR);
 
@@ -98,7 +99,7 @@ public class PaymentsServiceImpl implements PaymentsService {
 
             List<Payment> paymentList = findPayments(new DateTime(prevMonth), new DateTime(calStart), accountId);
             item.setValue(supportiveService.countPayments(paymentList));
-            barChartItems.add(item);
+            barChartItems.add(0, item);
         }
         return barChartItems;
     }
