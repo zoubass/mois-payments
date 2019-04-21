@@ -11,28 +11,36 @@ export class Home extends Component {
         paymentsData: [],
         summaryData: [],
         barChartData: [],
+        totalCount: 0,
         isLoading: true,
         groups: []
     };
 
     async componentDidMount() {
-        const fromDate = '01-01-1991';
-        const toDate = '29-03-2019';
         const accountId = 123;
 
         const responseItems = await fetch("/getBarChartYearItems/" + accountId);
-        const bodyItems = await  responseItems.json();
+        const bodyItems = await responseItems.json();
 
         const responseDetail = await fetch('/findPaymentsCurrYearDetail/' + accountId);
         const bodyDetail = await responseDetail.json();
 
-        const responseSummary = await fetch('/findPaymentsSummary/' + fromDate + '/' + toDate + '/' + accountId);
+        const responseSummary = await fetch('/getCategoriesWithSumm/' + accountId);
         const bodySummary = await responseSummary.json();
-        this.setState({paymentsData: bodyDetail, summaryData: bodySummary, barChartData:bodyItems, isLoading: false});
+
+        const responseTotal = await fetch('/getTotalPaymentCount/' + accountId);
+        const bodyTotal = await responseTotal.json();
+        this.setState({
+            paymentsData: bodyDetail,
+            summaryData: bodySummary,
+            barChartData: bodyItems,
+            totalCount: bodyTotal,
+            isLoading: false
+        });
     }
 
     render() {
-        const {paymentsData, summaryData, barChartData, isLoading} = this.state;
+        const {paymentsData, summaryData, barChartData, totalCount, isLoading} = this.state;
 
         if (isLoading) {
             return (
@@ -46,15 +54,18 @@ export class Home extends Component {
             <div className="dark">
                 <ChartMain barChartData={barChartData}/>
 
-                <div className="col-lg row">
+                <div className="row totalCount">
+                    <h2 className="totalCountText"> Count of all payments:</h2>
+                    <h2 className="totalCountValue"> {totalCount}</h2>
+                </div>
 
+                <div className="col-lg row">
                     <div className="col-md">
                         <div className="card">
                             <h4 className="card-title dark">Categories per Year </h4>
                             <PaymentsCategoryTable summaryData={summaryData}/>
                         </div>
                     </div>
-
 
                     <div className="col-md">
                         <div className="card">
@@ -65,12 +76,6 @@ export class Home extends Component {
 
                 </div>
             </div>
-           // <ChartMain/>
-
-           // <div className="App-body">
-           //
-           // </div>
-
         );
     }
 }

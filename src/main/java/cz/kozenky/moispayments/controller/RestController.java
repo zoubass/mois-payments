@@ -71,6 +71,21 @@ public class RestController {
         return paymentsService.getPaymentMonthsBarChartItems(dateDto, accountId);
     }
 
+    @RequestMapping("/getTotalPaymentCount/{accountId}")
+    public BigDecimal getTotalPaymentCount(@PathVariable BigDecimal accountId){
+        DateDto dateDto = supportiveService.getActualOnePerDate(Calendar.YEAR, 20);
+        List<Payment> payList = paymentsService.findPayments(new DateTime(dateDto.getFromD()), new DateTime(dateDto.getToD()), accountId);
+        return supportiveService.countPayments(payList);
+    }
+
+    @RequestMapping("/getCategoriesWithSumm/{accountId}")
+    public List<CategoryDto> getCategoriesWithSumm(@PathVariable BigDecimal accountId){
+        List<Category> catList = categoryList.allValues();
+        DateDto dateDto = supportiveService.getActualOnePerDate(Calendar.YEAR, 1);
+        List<Payment> payList = paymentsService.findPayments(new DateTime(dateDto.getFromD()), new DateTime(dateDto.getToD()), accountId);
+        return categoryService.countCategoryLove(catList, payList);
+    }
+
     @RequestMapping("/findPaymentsSummary/{from}/{to}/{accountId}")
     public List<PieChartItem> getPaymentsSummary(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal accountId) {
         List<Payment> payments = getPaymentsFromApi(from, to, accountId);
