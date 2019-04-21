@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.1.3.RELEASE'
     id 'java'
+    id "com.moowork.node" version "1.3.1"
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -29,3 +30,12 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+node {
+    nodeModulesDir = file("${project.projectDir}/mois-react-ui")
+}
+
+task buildFrontend(type: YarnTask) {
+    args = ['run', 'build']
+}
+tasks.build.dependsOn buildFrontend
