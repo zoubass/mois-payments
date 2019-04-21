@@ -37,6 +37,23 @@ export class PaymentsDetailTable extends Component {
                     columns={columns}
                     data={data}
                     defaultPageSize={5}
+
+                    getTrProps={(state, rowInfo) => {
+                        return {
+                            onClick: (e, handleOriginal) => {
+
+                                 this.props.history.push({
+                                     pathname: '/payment_detail',
+                                     state: { paymentId:
+                                         rowInfo.original.id
+                                     }
+                                 });
+                                if (handleOriginal) {
+                                    handleOriginal();
+                                }
+                            }
+                        };
+                    }}
                 />
             </div>
         );

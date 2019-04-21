@@ -23,6 +23,11 @@ export class PaymentDetail extends Component{
     this.setState({payment: bodyDetail[0], paymentsList: bodyDetail, isLoading: false});
     console.log("Loguju payments");
     console.log(this.state.payment[0]);
+    //**************************************
+    //tady z this.props.location.state tahas ten stav, kterej si posles prez history.push z jine komponenty
+    //**************************************
+    console.log("ID from month");
+    console.log(this.props.location.state.paymentId);
   }
   
   render() {

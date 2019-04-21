@@ -24,7 +24,7 @@ class App extends Component {
                 <Switch>
                     <Route exact path={"/"} component={Home}/>
                     <Route path={"/user"} component={User}/>
-                    <Route path={"/month"}component={Month}/>
+                    <Route path={"/month"}component={Month} {...this.props}/>
                     <Route path={"/payment_detail"} component={PaymentDetail}/>
                   <Route component={Error}/>
                 </Switch>
