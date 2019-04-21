@@ -2,6 +2,8 @@ package cz.kozenky.moispayments.service;
 
 import cz.kozenky.moispayments.model.Payment;
 import cz.kozenky.moispayments.model.codelist.Category;
+import cz.kozenky.moispayments.model.web_model.BarChartItem;
+import cz.kozenky.moispayments.model.web_model.DateDto;
 import cz.kozenky.moispayments.model.web_model.PaymentDto;
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,5 +18,7 @@ public interface PaymentsService {
     Payment savePayment(PaymentDto paymentDto);
 
     Category resolveCategory(Payment payment);
+
+    List<BarChartItem> getPaymentMonthsBarChartItems(DateDto dateInterval, BigDecimal accountId);
 
 }

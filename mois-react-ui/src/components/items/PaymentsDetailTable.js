@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css"
+import "./ItemsStyle.css"
 
 export class PaymentsDetailTable extends Component {
 

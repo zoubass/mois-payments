@@ -4,10 +4,17 @@ import cz.kozenky.moispayments.api.PaymentApi;
 import cz.kozenky.moispayments.model.Payment;
 import cz.kozenky.moispayments.model.codelist.Category;
 import cz.kozenky.moispayments.model.codelist.CategoryList;
+import cz.kozenky.moispayments.model.enumObj.MonthsInYear;
+import cz.kozenky.moispayments.model.web_model.BarChartItem;
+import cz.kozenky.moispayments.model.web_model.DateDto;
 import cz.kozenky.moispayments.model.web_model.PaymentDto;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
 import ma.glasnost.orika.MapperFactory;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +72,34 @@ public class PaymentsServiceImpl implements PaymentsService {
             e.printStackTrace();
         }
         return responsePayment;
+    }
+
+    @Override
+    public List<BarChartItem> getPaymentMonthsBarChartItems(DateDto dateInterval, BigDecimal accountId) {
+        List<BarChartItem> barChartItems = new ArrayList<>();
+        SupportiveService supportiveService = new SupportiveService();
+        Calendar calStart = Calendar.getInstance();
+        Calendar calEnd = Calendar.getInstance();
+        calStart.setTime(dateInterval.getFromD());
+        calEnd.setTime(dateInterval.getToD());
+        calStart.set(Calendar.DAY_OF_MONTH, 1);
+        calEnd.set(Calendar.DAY_OF_MONTH, 1);
+        calEnd.add(Calendar.MONTH, 1);
+        int condMonth = calStart.get(Calendar.MONTH);
+        int condYear = calEnd.get(Calendar.YEAR);
+
+        while ((calStart.get(Calendar.MONTH) != condMonth) || (calStart.get(Calendar.YEAR) != condYear)) {
+            int month = calStart.get(Calendar.MONTH);
+            Date prevMonth = calStart.getTime();
+            calStart.add(Calendar.MONTH, 1);
+            BarChartItem item = new BarChartItem();
+
+            item.setMonthsInYear(supportiveService.getMonthByInt(month));
+
+            List<Payment> paymentList = findPayments(new DateTime(prevMonth), new DateTime(calStart), accountId);
+            item.setValue(supportiveService.countPayments(paymentList));
+            barChartItems.add(item);
+        }
+        return barChartItems;
     }
 }

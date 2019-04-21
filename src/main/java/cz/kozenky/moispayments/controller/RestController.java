@@ -3,18 +3,19 @@ package cz.kozenky.moispayments.controller;
 import cz.kozenky.moispayments.model.Payment;
 import cz.kozenky.moispayments.model.codelist.Category;
 import cz.kozenky.moispayments.model.codelist.CategoryList;
-import cz.kozenky.moispayments.model.web_model.CategoryDto;
-import cz.kozenky.moispayments.model.web_model.PaymentDto;
-import cz.kozenky.moispayments.model.web_model.PieChartItem;
+import cz.kozenky.moispayments.model.web_model.*;
 import cz.kozenky.moispayments.service.CategoryService;
 import cz.kozenky.moispayments.service.PaymentsService;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import cz.kozenky.moispayments.service.SupportiveService;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,9 @@ public class RestController {
     @Autowired
     private CategoryList categoryList;
 
+    @Autowired
+    private SupportiveService supportiveService;
+
     @RequestMapping("/findPayments")
     public List<Payment> getPayments() {
         DateTime from = DateTime.now().minusYears(7);
@@ -49,6 +53,23 @@ public class RestController {
         return getPaymentsFromApi(from, to, accountId);
     }
 
+    @RequestMapping("/findPaymentsCurrYearDetail/{accountId}")
+    public List<Payment> getPaymentCurrYearDetail(@PathVariable BigDecimal accountId){
+        DateDto dateDto = supportiveService.getActualOnePerDate(Calendar.YEAR, 1);
+        return paymentsService.findPayments(new DateTime(dateDto.getFromD()), new DateTime(dateDto.getToD()), accountId);
+    }
+
+    @RequestMapping("/findPaymentsCurrMonthDetail/{accountId}")
+    public List<Payment> getPaymentCurrMonthDetail(@PathVariable BigDecimal accountId){
+        DateDto dateDto = supportiveService.getActualOnePerDate(Calendar.MONTH, 1);
+        return paymentsService.findPayments(new DateTime(dateDto.getFromD()), new DateTime(dateDto.getToD()), accountId);
+    }
+
+    @RequestMapping("/getBarChartYearItems/{accountId}")
+    public List<BarChartItem> getBarChartYearItems(@PathVariable BigDecimal accountId){
+        DateDto dateDto = supportiveService.getActualOnePerDate(Calendar.YEAR, 1);
+        return paymentsService.getPaymentMonthsBarChartItems(dateDto, accountId);
+    }
 
     @RequestMapping("/findPaymentsSummary/{from}/{to}/{accountId}")
     public List<PieChartItem> getPaymentsSummary(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal accountId) {

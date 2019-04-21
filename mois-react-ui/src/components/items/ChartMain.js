@@ -8,22 +8,11 @@ am4core.useTheme(am4themes_dark);
 export class ChartMain extends Component {
     componentDidMount() {
         let chart = am4core.create("chartdiv", am4charts.XYChart);
-
-        const monthNames = ["January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
-
-        let data = [];
-        let totCash = 0;
-        for (let i = 0; i < 12; i++) {
-            totCash = Math.round((Math.random() > 0 ? 1 : 0) * Math.random() * 100000);
-            data.push({month: monthNames[i], cash: totCash});
-        }
-        chart.data = data;
+        chart.data = this.props.barChartData;
 
 // Create axes
         let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-        categoryAxis.dataFields.category = "month";
+        categoryAxis.dataFields.category = "monthInYear";
         categoryAxis.renderer.labels.template.rotation = 270;
         categoryAxis.renderer.labels.template.hideOversized = false;
         categoryAxis.renderer.minGridDistance = 20;
@@ -36,10 +25,11 @@ export class ChartMain extends Component {
         let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
         valueAxis.title.text = "Cash";
         valueAxis.title.fontWeight = "bold";
+        valueAxis.min = 0;
 // Create series
         let series = chart.series.push(new am4charts.ColumnSeries3D());
-        series.dataFields.valueY = "cash";
-        series.dataFields.categoryX = "month";
+        series.dataFields.valueY = "value";
+        series.dataFields.categoryX = "monthInYear";
         series.name = "Cash";
         series.tooltipText = "{categoryX}: [bold]{valueY}[/]";
         series.columns.template.fillOpacity = .8;

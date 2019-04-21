@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import './components/Navigation.css';
 import './App.css';
-import './components/KFlow.css';
+import './components/items/KFlow.css';
 
 import {Home} from './components/Home';
 import {User} from "./components/User";
@@ -10,7 +10,7 @@ import {Error} from "./components/Error";
 import {Navigation} from "./components/Navigation";
 import {Month} from "./components/Month";
 import {PaymentDetail} from "./components/PaymentDetail";
-import {KFlow} from "./components/KFlow";
+import {KFlow} from "./components/items/KFlow";
 
 class App extends Component {
     render() {

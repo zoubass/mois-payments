@@ -47,7 +47,7 @@ export class Month extends Component {
             <div>
                 <h2>MONTH</h2>
                 <div className="col-lg">
-                    <div className="card">
+                    <div className="card myPieChart">
                         <h4 className="card-title">Categories</h4>
                         <PieChart summaryData={summaryData}/>
                     </div>
