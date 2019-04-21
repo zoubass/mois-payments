@@ -17,7 +17,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import cz.kozenky.moispayments.model.deserializers.CustomJsonDateDeserializer;
+import cz.kozenky.moispayments.model.deserializers.CustomJsonDateSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -61,7 +63,7 @@ public class Payment {
 
   @JsonProperty("editableByUser")
   private Boolean editableByUser = null;
-
+  
   /**
    * payment order realization status
    */
