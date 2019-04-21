@@ -68,7 +68,7 @@ export class Month extends Component {
                     <div className="col-md">
                         <div className="card">
                             <h4 className="card-title">Payments</h4>
-                            <PaymentsDetailTable paymentsData={paymentsData}/>
+                            <PaymentsDetailTable paymentsData={paymentsData} {...this.props}/>
                         </div>
                     </div>
 

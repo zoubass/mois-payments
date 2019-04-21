@@ -13,7 +13,7 @@ public class AppConfig {
     @Bean
     public MapperFactory mapperFactory(){
         MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build(); 
-        mapperFactory.getConverterFactory().registerConverter(new PaymentDtoIntoPaymentMapper());
+        mapperFactory.getConverterFactory().registerConverter(new PaymentDtoIntoPaymentMapper(categories()));
         return mapperFactory;
     }
     
