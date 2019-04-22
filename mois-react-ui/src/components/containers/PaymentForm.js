@@ -143,8 +143,13 @@ export class PaymentForm extends Component {
     e.preventDefault();
     this.setState({
       newPayment: {
+        id: "",
         amount: "",
-        accountId: ""
+        accountId: "",
+        payerMessage: "",
+        accountNumber: "",
+        bankCode: "",
+        category: ""
       }
     });
   }
@@ -152,11 +157,6 @@ export class PaymentForm extends Component {
   render() {
     return (
         <form className="container-fluid" onSubmit={this.handleFormSubmit}>
-          <Input
-              inputtype={"hidden"}
-              name={"id"}
-              value={this.state.newPayment.id}
-          />{" "}
           <Input
               inputtype={"number"}
               title={"Account ID"}
@@ -208,6 +208,11 @@ export class PaymentForm extends Component {
               value={this.state.newPayment.bankCode}
               placeholder={"Enter bank code"}
               handleChange={this.handleInput}
+          />
+          <Input
+              inputtype={"hidden"}
+              name={"id"}
+              value={this.state.newPayment.id}
           />
           {/* About you */}
           <Button

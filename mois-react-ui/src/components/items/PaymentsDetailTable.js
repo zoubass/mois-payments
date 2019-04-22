@@ -8,6 +8,11 @@ export class PaymentsDetailTable extends Component {
     render() {
         const  columns = [
             {
+                id: 'id',
+                Header: 'Id',
+                accessor: d => d.value.id
+            },
+            {
                 id: 'value',
                 Header: 'Value',
                 accessor: d => d.value.amount
@@ -44,8 +49,8 @@ export class PaymentsDetailTable extends Component {
 
                                  this.props.history.push({
                                      pathname: '/payment_detail',
-                                     state: { paymentId:
-                                         rowInfo.original.id
+                                     state: { payment:
+                                         rowInfo.original
                                      }
                                  });
                                 if (handleOriginal) {
