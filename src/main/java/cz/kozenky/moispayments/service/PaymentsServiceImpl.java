@@ -33,6 +33,9 @@ public class PaymentsServiceImpl implements PaymentsService {
     private CategoryList categoryList;
 
     @Autowired
+    private SupportiveService supportiveService;
+
+    @Autowired
     public PaymentsServiceImpl(PaymentApi paymentApi) {
         this.paymentApi = paymentApi;
     }
@@ -77,7 +80,6 @@ public class PaymentsServiceImpl implements PaymentsService {
     @Override
     public List<BarChartItem> getPaymentMonthsBarChartItems(DateDto dateInterval, BigDecimal accountId) {
         List<BarChartItem> barChartItems = new ArrayList<>();
-        SupportiveService supportiveService = new SupportiveService();
         Calendar calStart = Calendar.getInstance();
         Calendar calEnd = Calendar.getInstance();
         calStart.setTime(dateInterval.getFromD());
