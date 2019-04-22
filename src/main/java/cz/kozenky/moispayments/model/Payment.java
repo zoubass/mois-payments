@@ -17,9 +17,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import cz.kozenky.moispayments.model.deserializers.CustomJsonDateDeserializer;
-import cz.kozenky.moispayments.model.deserializers.CustomJsonDateSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -28,7 +26,7 @@ import org.joda.time.DateTime;
 /**
  * Payment
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-03-17T19:50:24.264+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-04-22T10:39:10.089+02:00")
 public class Payment {
   @JsonProperty("value")
   private PaymentValue value = null;

@@ -22,7 +22,7 @@ import java.util.Objects;
  * domestic payments additional info (symbols for fomestic payments)
  */
 @ApiModel(description = "domestic payments additional info (symbols for fomestic payments)")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-03-17T19:50:24.264+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-04-22T10:39:10.089+02:00")
 public class TransactionAdditionalInfoDomestic {
   @JsonProperty("constantSymbol")
   private String constantSymbol = null;

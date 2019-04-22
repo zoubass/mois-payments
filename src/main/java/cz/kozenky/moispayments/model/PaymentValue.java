@@ -23,7 +23,7 @@ import java.util.Objects;
  * amount &amp; currency of payment order
  */
 @ApiModel(description = "amount & currency of payment order")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-03-17T19:50:24.264+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-04-22T10:39:10.089+02:00")
 public class PaymentValue {
   @JsonProperty("amount")
   private BigDecimal amount = null;
