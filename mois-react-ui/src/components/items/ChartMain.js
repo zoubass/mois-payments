@@ -6,6 +6,11 @@ import am4themes_dark from "@amcharts/amcharts4/themes/dark";
 am4core.useTheme(am4themes_dark);
 
 export class ChartMain extends Component {
+    state = {
+        monthData: [],
+        isClicked: false
+    };
+
     componentDidMount() {
         let chart = am4core.create("chartdiv", am4charts.XYChart);
         chart.data = this.props.barChartData;
@@ -51,6 +56,20 @@ export class ChartMain extends Component {
         chart.cursor.lineX.strokeOpacity = 0;
         chart.cursor.lineY.strokeOpacity = 0;
 
+        series.columns.template.events.on("hit", async function (ev) {
+            let month = ev.target.column3D.dataItem.categories;
+            const responseMonth = await fetch("/getMonthItem/" + Object.values(month));
+            const bodyMonth = await responseMonth.json();
+            console.log("click bar: ", bodyMonth);
+
+            this.props.history.push({
+                pathname: '/month',
+                state:{
+                    monthData: bodyMonth
+                }
+            })
+        }, this);
+
         this.chart = chart;
     }
 
@@ -71,7 +90,6 @@ export class ChartMain extends Component {
             <div className="Chart-styles">
                 <div id="chartdiv" style={{width: "100%", height: "500px"}}>asd</div>
             </div>
-
         );
     }
 }

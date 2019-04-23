@@ -3,6 +3,7 @@ package cz.kozenky.moispayments.service;
 import cz.kozenky.moispayments.model.Payment;
 import cz.kozenky.moispayments.model.enumObj.MonthsInYear;
 import cz.kozenky.moispayments.model.web_model.DateDto;
+import cz.kozenky.moispayments.model.web_model.MonthItem;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -39,34 +40,21 @@ public class SupportiveService {
     }
 
     public MonthsInYear getMonthByInt(int month) {
-        switch (month) {
-            case 0:
-                return MonthsInYear.JANUARY;
-            case 1:
-                return MonthsInYear.FEBRUARY;
-            case 2:
-                return MonthsInYear.MARCH;
-            case 3:
-                return MonthsInYear.APRIL;
-            case 4:
-                return MonthsInYear.MAY;
-            case 5:
-                return MonthsInYear.JUNE;
-            case 6:
-                return MonthsInYear.JULY;
-            case 7:
-                return MonthsInYear.AUGUST;
-            case 8:
-                return MonthsInYear.SEPTEMBER;
-            case 9:
-                return MonthsInYear.OCTOBER;
-            case 10:
-                return MonthsInYear.NOVEMBER;
-            case 11:
-                return MonthsInYear.DECEMBER;
-            default:
-                return null;
+        for (MonthsInYear item : MonthsInYear.values()){
+            if (month == (item.getVal() - 1)){
+                return item;
+            }
         }
+        return MonthsInYear.UNKNOWN;
+    }
+
+    public MonthsInYear getMonthsByString(String month){
+        for (MonthsInYear item : MonthsInYear.values()){
+            if (month.equals(item.getName().toUpperCase())){
+                return item;
+            }
+        }
+        return MonthsInYear.UNKNOWN;
     }
 
     public BigDecimal countPayments(List<Payment> paymentList){
@@ -75,5 +63,24 @@ public class SupportiveService {
             count = count.add(payment.getValue().getAmount());
         }
         return count;
+    }
+
+    public MonthItem getMonthItem(String month){
+        MonthItem item = new MonthItem();
+        MonthsInYear monthsInYear = getMonthsByString(month);
+        item.setMonth(monthsInYear.getVal());
+        item.setMonthS(monthsInYear.getName());
+
+        /*
+         * Calculating if is picked month is in this or last year
+         */
+        Calendar cal = Calendar.getInstance();
+        if (monthsInYear.getVal() <= (cal.get(Calendar.MONTH) + 1)){
+            item.setYear(cal.get(Calendar.YEAR));
+        }else {
+            item.setYear((cal.get(Calendar.YEAR)) - 1);
+        }
+
+        return item;
     }
 }

@@ -52,7 +52,7 @@ export class Home extends Component {
         }
         return (
             <div className="dark">
-                <ChartMain barChartData={barChartData}/>
+                <ChartMain barChartData={barChartData}{...this.props}/>
 
                 <div className="row totalCount">
                     <h2 className="totalCountText"> Count of all payments:</h2>

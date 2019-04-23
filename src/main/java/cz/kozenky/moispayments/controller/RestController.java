@@ -139,4 +139,9 @@ public class RestController {
         }
         return paymentsService.findPayments(fromParsed, toParsed, accountId);
     }
+
+    @RequestMapping("/getMonthItem/{month}")
+    public MonthItem getMonthItem(@PathVariable String month){
+        return supportiveService.getMonthItem(month);
+    }
 }
