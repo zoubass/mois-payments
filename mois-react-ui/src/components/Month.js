@@ -21,15 +21,25 @@ export class Month extends Component {
         selectYear: '',
 
         allMonths: [],
-        allYears: []
-
+        allYears: [],
+        monthData: []
     };
 
     async componentDidMount() {
-        // const yearPassed = this.props.location.state.yearPassed;
-        // const monthPassed = this.props.location.state.monthPassed;
-        const yearPassed = null;
-        const monthPassed = null;
+        let yearPassed = null;
+        let monthPassed = null;
+        let monthPassedString = null;
+        let monthData = null;
+        try {
+            monthData = this.props.location.state.monthData;
+            yearPassed = Object.values(monthData)[2];
+            monthPassed = Object.values(monthData)[0] - 1;
+            monthPassedString = Object.values(monthData)[1];
+            console.log("redirect");
+        } catch (e) {
+            console.log("direct");
+        }
+
         const accountId = 123;
 
         var yearTo = new Date().getFullYear();

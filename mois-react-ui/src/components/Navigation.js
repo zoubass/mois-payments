@@ -13,15 +13,6 @@ export class Navigation extends Component {
                             <Link to="/" className="tabs__link">Home</Link>
                         </li>
                         <li className="tabs__item">
-                            <Link to="/asd" className="tabs__link">Talks</Link>
-                        </li>
-                        <li className="tabs__item">
-                            <Link to="/qwe" className="tabs__link">Schedule</Link>
-                        </li>
-                        <li className="tabs__item">
-                            <Link to="/zxc" className="tabs__link">Location</Link>
-                        </li>
-                        <li className="tabs__item">
                             <Link to="/payment_detail" className="tabs__link">Payment detail</Link>
                         </li>
                         <li className="tabs__item">

@@ -68,6 +68,21 @@
   border-color: white;
 }
 
+.somethingIsWrong{
+  margin-top: 10rem;
+}
+
+.somethingIsWrongH2{
+  color: white;
+  font-size: larger;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.somethingIsWrongImage{
+  width: 50%;
+}
+
 .totalCountText{
   font-size: 1.5rem;
   padding-top: .75rem;

@@ -14,7 +14,8 @@ public enum MonthsInYear {
     SEPTEMBER("September", 9),
     OCTOBER("October", 10),
     NOVEMBER("November", 11),
-    DECEMBER("December", 12);
+    DECEMBER("December", 12),
+    UNKNOWN("Unknown", -1);
 
     @JsonProperty("name")
     private String name;
