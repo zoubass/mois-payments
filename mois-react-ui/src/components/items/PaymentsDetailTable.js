@@ -8,11 +8,6 @@ export class PaymentsDetailTable extends Component {
     render() {
         const  columns = [
             {
-                id: 'id',
-                Header: 'Id',
-                accessor: d => d.value.id
-            },
-            {
                 id: 'value',
                 Header: 'Value',
                 accessor: d => d.value.amount
@@ -30,7 +25,17 @@ export class PaymentsDetailTable extends Component {
             {
                 id:'accountNumber',
                 Header: 'Account number',
-                accessor:d => d.accountNumber,
+                accessor:d => d.partyAccount.accountNumber,
+            },
+            {
+                id:'bankCode',
+                Header: 'Account number',
+                accessor:d => d.partyAccount.bankCode,
+            },
+            {
+                id:'accountId',
+                Header: 'Account ID',
+                accessor:d => d.accountId,
             }
         ];
 

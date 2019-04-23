@@ -91,7 +91,7 @@ export class CategoryForm extends Component {
           />{" "}
           <Input
               inputtype={"number"}
-              title={"accountNumber"}
+              title={"Account ID"}
               name={"accountId"}
               value={this.state.category.accountId}
               placeholder={"Enter account id"}
@@ -99,7 +99,7 @@ export class CategoryForm extends Component {
           />{" "}
           <Input
               inputtype={"text"}
-              title={"Account ID"}
+              title={"Bank account number"}
               name={"accountNumber"}
               value={this.state.category.accountNumber}
               placeholder={"Enter bank account number"}
