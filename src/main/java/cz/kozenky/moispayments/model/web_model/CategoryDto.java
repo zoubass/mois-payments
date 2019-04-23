@@ -64,4 +64,8 @@ public class CategoryDto {
     public void setSummValue(BigDecimal summValue) {
         this.summValue = summValue;
     }
+
+    public boolean isEmpty() {
+        return bankCode == null && accountId == null && accountNumber == null && id == null && name == null;
+    }
 }

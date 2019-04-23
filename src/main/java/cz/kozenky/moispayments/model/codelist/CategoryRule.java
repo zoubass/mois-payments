@@ -7,7 +7,13 @@ public class CategoryRule {
     private BigDecimal accountId;
     private String bankCode;
     private String bankAccountNumber;
-    
+
+    public CategoryRule() {
+        this.accountId=new BigDecimal(0);
+        this.bankAccountNumber = "";
+        this.bankCode = "";
+    }
+
     public BigDecimal getAccountId() {
         return accountId;
     }

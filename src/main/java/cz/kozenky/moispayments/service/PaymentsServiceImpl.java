@@ -69,7 +69,7 @@ public class PaymentsServiceImpl implements PaymentsService {
         Payment responsePayment = null;
 
         try {
-            responsePayment = paymentApi.addPayment(payment);
+//            responsePayment = paymentApi.addPayment(payment);
         } catch (Exception e) {
             //Only for debug
             e.printStackTrace();

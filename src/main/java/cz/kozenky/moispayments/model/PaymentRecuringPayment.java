@@ -14,6 +14,8 @@
 package cz.kozenky.moispayments.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import cz.kozenky.moispayments.model.deserializers.CustomDateTimeSerializer;
 import cz.kozenky.moispayments.model.deserializers.CustomJsonDateDeserializer;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -32,10 +34,12 @@ public class PaymentRecuringPayment {
 
     @JsonProperty("firstPayment")
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
+    @JsonSerialize(using = CustomDateTimeSerializer.class)
     private DateTime firstPayment = null;
 
     @JsonProperty("lastPayment")
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
+    @JsonSerialize(using = CustomDateTimeSerializer.class)
     private DateTime lastPayment = null;
 
     /**

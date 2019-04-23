@@ -3,11 +3,12 @@ import React from "react";
 import Select from "../items/Select";
 import Input from "../items/Input";
 import Button from "../items/Button";
+import Redirect from "react-router-dom/es/Redirect";
+
 
 export class PaymentForm extends Component {
   constructor(props) {
     super(props);
-    
     this.state = {
       newPayment: props.payment != null?
           {
@@ -17,7 +18,9 @@ export class PaymentForm extends Component {
             payerMessage: props.payment.payerMessage,
             accountNumber: props.payment.partyAccount.accountNumber,
             bankCode: props.payment.partyAccount.bankCode,
-            category: props.payment.category
+            category: props.payment.categoryId,
+            tempCat: props.payment.categoryId,
+            dueDate: props.payment.dueDate
           } :
           {
             id: "",
@@ -26,8 +29,14 @@ export class PaymentForm extends Component {
             payerMessage: "",
             accountNumber: "",
             bankCode: "",
-            category: ""
+            category: "",
+            dueDate: "",
+            tempCat: ""
           },
+      isBeforeChange: true,
+      categoryName: "",
+      fetchedCategories: "",
+      redirectToMonth: "",
       categoryNames: "",
       categoryIds: "",
       genderOptions: ["Nezařazeno", "Elektronika", ""],
@@ -44,8 +53,15 @@ export class PaymentForm extends Component {
 
   async componentDidMount() {
     const responseDetail = await fetch('/categories');
-    const fetchedCategories = await responseDetail.json();
-    this.setState({categoryNames: fetchedCategories.map(category=> category.name), categoryIds: fetchedCategories.map(category=> category.id)});
+    const fetchedCats = await responseDetail.json();
+    this.setState({
+      redirectToMonth: false,
+      categoryNames: fetchedCats.map(category => category.name),
+      categoryIds: fetchedCats.map(category => category.id),
+      fetchedCategories: fetchedCats,
+      categoryName: fetchedCats.filter(
+          cateogry => cateogry.id === this.state.newPayment.tempCat)
+    });
   }
 
   /* This lifecycle hook gets executed when the component mounts */
@@ -77,6 +93,7 @@ export class PaymentForm extends Component {
   }
 
   handleInput(e) {
+    this.state.isBeforeChange=false; 
     let value = e.target.value;
     let name = e.target.name;
     this.setState(
@@ -132,11 +149,8 @@ export class PaymentForm extends Component {
         Accept: "application/json",
         "Content-Type": "application/json"
       }
-    }).then(response => {
-      response.json().then(data => {
-        console.log("Successful" + data);
-      });
     });
+    this.setState({redirectToMonth: true});
   }
 
   handleClearForm(e) {
@@ -149,12 +163,25 @@ export class PaymentForm extends Component {
         payerMessage: "",
         accountNumber: "",
         bankCode: "",
-        category: ""
+        category: "",
+        dueDate: ""
       }
     });
   }
 
   render() {
+    const redirectToMonth = this.state.redirectToMonth;
+    if (redirectToMonth) {
+      return <Redirect to="/month" />
+    }
+
+    console.log("Nazev v Renderu");
+    console.log(this.state.categoryName);
+    if (this.state.isBeforeChange) {
+      this.state.newPayment.category = this.state.categoryName.length > 0
+          ? this.state.categoryName[0].name : "";
+    }
+    console.log(this.state.newPayment.category);
     return (
         <form className="container-fluid" onSubmit={this.handleFormSubmit}>
           <Input
@@ -173,21 +200,12 @@ export class PaymentForm extends Component {
               placeholder={"Enter amount"}
               handleChange={this.handleInput}
           />
-          {/* Payer message */}
-          <Input
-              inputtype={"text"}
-              name={"payerMessage"}
-              title={"Payer message"}
-              value={this.state.newPayment.payerMessage}
-              placeholder={"Enter payer message"}
-              handleChange={this.handleInput}
-          />{" "}
           {/* Category */}
           <Select
               title={"Category"}
               name={"category"}
               options={this.state.categoryNames.length > 0? this.state.categoryNames : this.state.defaultCategories}
-              value={this.state.newPayment.accountId}
+              value={this.state.newPayment.category}
               placeholder={"Select category"}
               handleChange={this.handleInput}
           />{" "}

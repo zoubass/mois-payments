@@ -6,7 +6,8 @@ import java.math.BigDecimal;
 import org.joda.time.DateTime;
 
 public class PaymentDto {
-    private BigDecimal id;
+
+    private String id;
     private BigDecimal amount;
     private BigDecimal accountId;
     private String payerMessage;
@@ -72,11 +73,11 @@ public class PaymentDto {
         this.category = category;
     }
 
-    public BigDecimal getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(BigDecimal id) {
+    public void setId(String id) {
         this.id = id;
     }
 }

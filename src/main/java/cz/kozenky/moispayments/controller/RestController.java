@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
@@ -50,13 +51,14 @@ public class RestController {
 
     @RequestMapping("/findPaymentsDetail/{from}/{to}/{accountId}")
     public List<Payment> getPaymentsDetail(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal accountId) {
-        return getPaymentsFromApi(from, to, accountId);
+        return applyCategoryRulesForUnknown(getPaymentsFromApi(from, to, accountId));
     }
 
     @RequestMapping("/findPaymentsCurrYearDetail/{accountId}")
     public List<Payment> getPaymentCurrYearDetail(@PathVariable BigDecimal accountId){
         DateDto dateDto = supportiveService.getActualOnePerDate(Calendar.YEAR, 1);
-        return paymentsService.findPayments(new DateTime(dateDto.getFromD()), new DateTime(dateDto.getToD()), accountId);
+        List<Payment> payments = paymentsService.findPayments(new DateTime(dateDto.getFromD()), new DateTime(dateDto.getToD()), accountId);
+        return applyCategoryRulesForUnknown(payments);
     }
 
     @RequestMapping("/findPaymentsCurrMonthDetail/{accountId}")
@@ -90,7 +92,7 @@ public class RestController {
     public List<PieChartItem> getPaymentsSummary(@PathVariable String from, @PathVariable String to, @PathVariable BigDecimal accountId) {
         List<Payment> payments = getPaymentsFromApi(from, to, accountId);
         
-        //TODO: pro všechny payments s neznámou kategorií prohnat metodou "resolveByRule"
+        applyCategoryRulesForUnknown(payments);
         
         List<PieChartItem> modelUnGroupped = new ArrayList<PieChartItem>() {};
         for (Payment p: payments) {
@@ -112,13 +114,13 @@ public class RestController {
 
     @PostMapping("/add_payment")
     public Payment addPayment(@RequestBody PaymentDto paymentDto){
-        Payment payment = paymentsService.savePayment(paymentDto);
+//        Payment payment = paymentsService.savePayment(paymentDto);
         categoryService.saveRule(paymentDto);
-        return payment;
+        return new Payment();
     }
 
     @PostMapping("/add_category")
-    public String addCategory(@RequestBody CategoryDto categoryDto){
+    public Message addCategory(@RequestBody CategoryDto categoryDto){
         return categoryService.saveCategory(categoryDto);
     }
     
@@ -138,5 +140,10 @@ public class RestController {
             e.printStackTrace();
         }
         return paymentsService.findPayments(fromParsed, toParsed, accountId);
+    }
+    
+    private List<Payment> applyCategoryRulesForUnknown(List<Payment> payments){
+        payments.forEach(payment-> payment.setCategoryId(paymentsService.resolveCategory(payment).getId()));
+        return new ArrayList<>(payments);
     }
 }
