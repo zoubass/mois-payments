@@ -51,7 +51,7 @@ public class CategoryService {
             message.setMessage("Category with id: " + categoryDto.getId() + " already exists.");
             return false;
         } else if (categoryList.getCategories().stream().anyMatch(category -> category.getName().equals(categoryDto.getName()))) {
-            message.setMessage("Category with name: " + categoryDto.getId() + " already exists.");
+            message.setMessage("Category with name: " + categoryDto.getName() + " already exists.");
             return false;
         } else if (categoryList.getCategories().stream().anyMatch(category -> checkRuleMatch(category, categoryDto))) {
             message.setMessage("Category with this rule exists");
@@ -63,8 +63,8 @@ public class CategoryService {
 
     private boolean checkRuleMatch(Category category, CategoryDto categoryDto) {
         CategoryRule rule = category.getRule();
-        return rule.getBankAccountNumber().equals(categoryDto.getAccountNumber()) || rule.getBankCode().equals(categoryDto.getBankCode())
-                || rule.getAccountId().compareTo(categoryDto.getAccountId()) == 0;
+        return rule.getBankAccountNumber().equals(categoryDto.getAccountNumber()) && rule.getBankCode().equals(categoryDto.getBankCode())
+                && rule.getAccountId().compareTo(categoryDto.getAccountId()) == 0;
     }
 
     public void saveRule(PaymentDto paymentDto) {
