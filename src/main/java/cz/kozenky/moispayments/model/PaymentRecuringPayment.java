@@ -13,29 +13,33 @@
 
 package cz.kozenky.moispayments.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import cz.kozenky.moispayments.model.deserializers.CustomDateTimeSerializer;
 import cz.kozenky.moispayments.model.deserializers.CustomJsonDateDeserializer;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.Objects;
 import org.joda.time.DateTime;
 
 /**
  * party account number
  */
 @ApiModel(description = "party account number")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-03-17T19:50:24.264+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-04-22T10:39:10.089+02:00")
 public class PaymentRecuringPayment {
 
     @JsonProperty("firstPayment")
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
+    @JsonSerialize(using = CustomDateTimeSerializer.class)
     private DateTime firstPayment = null;
 
     @JsonProperty("lastPayment")
     @JsonDeserialize(using = CustomJsonDateDeserializer.class)
+    @JsonSerialize(using = CustomDateTimeSerializer.class)
     private DateTime lastPayment = null;
 
     /**

@@ -18,8 +18,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import cz.kozenky.moispayments.model.deserializers.CustomDateTimeSerializer;
 import cz.kozenky.moispayments.model.deserializers.CustomJsonDateDeserializer;
-import cz.kozenky.moispayments.model.deserializers.CustomJsonDateSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -28,7 +28,7 @@ import org.joda.time.DateTime;
 /**
  * Payment
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-03-17T19:50:24.264+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-04-22T10:39:10.089+02:00")
 public class Payment {
   @JsonProperty("value")
   private PaymentValue value = null;
@@ -38,6 +38,7 @@ public class Payment {
 
   @JsonProperty("dueDate")
   @JsonDeserialize(using = CustomJsonDateDeserializer.class)
+  @JsonSerialize(using = CustomDateTimeSerializer.class)
   private DateTime dueDate = null;
 
   @JsonProperty("recuringPayment")
@@ -56,7 +57,10 @@ public class Payment {
   private PaymentAdditionalInfo additionalInfo = null;
 
   @JsonProperty("id")
-  private BigDecimal id = null;
+  private String id = null;
+
+  @JsonProperty("_id")
+  private String _id = null;
 
   @JsonProperty("accountId")
   private BigDecimal accountId = null;
@@ -142,7 +146,7 @@ public class Payment {
     this.value = value;
     return this;
   }
-
+  
    /**
    * Get value
    * @return value
@@ -282,7 +286,7 @@ public class Payment {
     this.additionalInfo = additionalInfo;
   }
 
-  public Payment id(BigDecimal id) {
+  public Payment id(String id) {
     this.id = id;
     return this;
   }
@@ -292,11 +296,21 @@ public class Payment {
    * @return id
   **/
   @ApiModelProperty(required = true, value = "internal domestic payment order identifier")
-  public BigDecimal getId() {
+  public String getId() {
     return id;
   }
 
-  public void setId(BigDecimal id) {
+
+  public void set_id(String _id) {
+    this._id = _id;
+  }
+  
+  @ApiModelProperty
+  public String get_id(){
+    return _id;
+  }
+  
+  public void setId(String id) {
     this.id = id;
   }
 

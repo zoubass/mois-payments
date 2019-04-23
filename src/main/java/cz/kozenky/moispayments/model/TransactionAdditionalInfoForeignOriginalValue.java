@@ -23,7 +23,7 @@ import java.util.Objects;
  * amount &amp; currency in which transaction was originated
  */
 @ApiModel(description = "amount & currency in which transaction was originated")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-03-17T19:50:24.264+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-04-22T10:39:10.089+02:00")
 public class TransactionAdditionalInfoForeignOriginalValue {
   @JsonProperty("amount")
   private BigDecimal amount = null;

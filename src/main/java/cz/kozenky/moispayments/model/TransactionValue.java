@@ -23,7 +23,7 @@ import java.util.Objects;
  * amount &amp; currency used for bookkeeping (e.g. amount in account&#39;s currency). Can be negative e.g. if something was withdrawn from an account. Original transaction amount and currency will be specified in &#x60;additionalInfo&#x60; object if applicable
  */
 @ApiModel(description = "amount & currency used for bookkeeping (e.g. amount in account's currency). Can be negative e.g. if something was withdrawn from an account. Original transaction amount and currency will be specified in `additionalInfo` object if applicable")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-03-17T19:50:24.264+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2019-04-22T10:39:10.089+02:00")
 public class TransactionValue {
   @JsonProperty("amount")
   private BigDecimal amount = null;

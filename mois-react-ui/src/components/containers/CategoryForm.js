@@ -8,12 +8,15 @@ export class CategoryForm extends Component {
 
     this.state = {
       category: {
-        id: "",
-        name: "",
-        accountId: "",
-        accountNumber: "",
-        bankCode: ""
+        id: null,
+        name: null,
+        accountId: null,
+        accountNumber: null,
+        bankCode: null
       },
+      responseData: {
+        message: ""
+      }
     };
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
     this.handleClearForm = this.handleClearForm.bind(this);
@@ -37,20 +40,21 @@ export class CategoryForm extends Component {
   handleFormSubmit(e) {
     e.preventDefault();
     let newCategory = this.state.category;
-
-    fetch("/add_category", {
-      method: "POST",
-      body: JSON.stringify(newCategory),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    }).then(response => {
-      response.json().then(data => {
-        console.log("Successful" + data);
+      fetch("/add_category", {
+        method: "POST",
+        body: JSON.stringify(newCategory),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      }).then(response => {
+        response.json().then(data => {
+          console.log(data);
+          this.setState({responseData: data})
+        });
       });
-    });
-  }
+    }
+  
 
   handleClearForm(e) {
     e.preventDefault();
@@ -67,6 +71,7 @@ export class CategoryForm extends Component {
 
   render() {
     return (
+        
         <form className="container-fluid" onSubmit={this.handleFormSubmit}>
           <Input
               inputtype={"number"}
@@ -86,7 +91,7 @@ export class CategoryForm extends Component {
           />{" "}
           <Input
               inputtype={"number"}
-              title={"accountNumber"}
+              title={"Account ID"}
               name={"accountId"}
               value={this.state.category.accountId}
               placeholder={"Enter account id"}
@@ -94,7 +99,7 @@ export class CategoryForm extends Component {
           />{" "}
           <Input
               inputtype={"text"}
-              title={"Account ID"}
+              title={"Bank account number"}
               name={"accountNumber"}
               value={this.state.category.accountNumber}
               placeholder={"Enter bank account number"}
@@ -102,7 +107,7 @@ export class CategoryForm extends Component {
           />{" "}
           <Input
               inputtype={"text"}
-              title={"Account ID"}
+              title={"Bank code"}
               name={"bankCode"}
               value={this.state.category.bankCode}
               placeholder={"Enter bank code"}
@@ -123,6 +128,8 @@ export class CategoryForm extends Component {
               style={buttonStyle}
           />{" "}
           {/* Clear the form */}
+          {console.log(this.state.responseData)}
+          <div>{this.state.responseData.message}</div>
         </form>
     );
   }

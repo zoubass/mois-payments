@@ -1,0 +1,28 @@
+.dark{
+    background: #282c34;
+    color: white;
+}
+
+.card-title{
+    padding-bottom: .75rem;
+    padding-top: .785rem;
+    padding-left: .75rem;
+    background-color: #282c34;
+    color: white;
+}
+
+.card{
+    margin: 1.85rem 1rem;
+    background-color: lightslategray;
+}
+
+div.ReactTable{
+    padding-top: 0rem;
+    background: #282c34;
+    color: white;
+}
+
+.myPieChart{
+    padding-bottom: .05rem;
+}
+
