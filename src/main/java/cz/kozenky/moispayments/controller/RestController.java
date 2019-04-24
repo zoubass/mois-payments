@@ -84,6 +84,7 @@ public class RestController {
         List<Category> catList = categoryList.allValues();
         DateDto dateDto = supportiveService.getActualOnePerDate(Calendar.YEAR, 1);
         List<Payment> payList = paymentsService.findPayments(new DateTime(dateDto.getFromD()), new DateTime(dateDto.getToD()), accountId);
+        applyCategoryRulesForUnknown(payList);
         return categoryService.countCategoryLove(catList, payList);
     }
 
@@ -109,6 +110,7 @@ public class RestController {
             model.add(new PieChartItem(s.getValue(),s.getKey(),categoryList.getByName(s.getKey()).getId()));
         }
         return model;
+        
     }
 
     @PostMapping("/add_payment")
