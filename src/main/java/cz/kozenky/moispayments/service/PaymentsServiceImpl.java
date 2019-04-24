@@ -99,10 +99,16 @@ public class PaymentsServiceImpl implements PaymentsService {
 
             item.setMonthsInYear(supportiveService.getMonthByInt(month));
 
-            List<Payment> paymentList = findPayments(new DateTime(prevMonth), new DateTime(calStart), accountId);
+            List<Payment> payments = findPayments(new DateTime(prevMonth), new DateTime(calStart), accountId);
+            List<Payment> paymentList = applyCategoryRulesForUnknown(payments);
             item.setValue(supportiveService.countPayments(paymentList));
             barChartItems.add(0, item);
         }
         return barChartItems;
+    }
+
+    private List<Payment> applyCategoryRulesForUnknown(List<Payment> payments){
+        payments.forEach(payment-> payment.setCategoryId(resolveCategory(payment).getId()));
+        return new ArrayList<>(payments);
     }
 }
